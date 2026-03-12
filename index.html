@@ -3,198 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Apps | Digital Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>Pro Apps | Premium Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --container-bg: rgba(30, 41, 59, 0.7);
-            --accent-color: #38bdf8;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --ad-bg: rgba(15, 23, 42, 0.8);
-            --ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --bg: #05070a;
+            --panel: rgba(13, 17, 23, 0.8);
+            --accent: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            --neon: #00f2fe;
+            --text: #ffffff;
+            --text-dim: #94a3b8;
+            --border: rgba(0, 242, 254, 0.2);
+            --card-hover: rgba(0, 242, 254, 0.1);
         }
 
         .light-mode {
-            --bg-color: #f1f5f9;
-            --container-bg: rgba(255, 255, 255, 0.9);
-            --accent-color: #0284c7;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --ad-bg: rgba(226, 232, 240, 0.8);
+            --bg: #f0f2f5;
+            --panel: rgba(255, 255, 255, 0.9);
+            --accent: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+            --neon: #2193b0;
+            --text: #1a1a1b;
+            --text-dim: #4b5563;
+            --border: rgba(33, 147, 176, 0.3);
+            --card-hover: rgba(33, 147, 176, 0.05);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg); color: var(--text); transition: 0.5s; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+
+        /* Floating Nav */
+        .nav-sticky { width: 100%; max-width: 550px; position: sticky; top: 15px; z-index: 1000; margin-bottom: 40px; }
+        .main-btn { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: #fff; padding: 18px; border-radius: 20px; text-decoration: none; font-family: 'Montserrat'; font-weight: 900; box-shadow: 0 10px 30px rgba(0, 242, 254, 0.3); transition: 0.3s; text-transform: uppercase; }
+        .main-btn:hover { transform: scale(1.02); filter: brightness(1.1); }
+
+        /* Ads */
+        .ad-container { width: 100%; max-width: 720px; margin-bottom: 30px; }
+        .ad-box { width: 100%; height: 1080px; background: var(--panel); border: 2px solid var(--border); border-radius: 30px; overflow: hidden; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+        .ad-label { position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: var(--neon); color: #000; font-size: 10px; font-weight: 900; padding: 5px 15px; border-radius: 0 0 12px 12px; z-index: 5; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* Glass Panel */
+        .glass-panel { width: 100%; max-width: 550px; background: var(--panel); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 50px; padding: 60px 35px; text-align: center; position: relative; box-shadow: 0 50px 100px rgba(0,0,0,0.4); }
         
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            transition: 0.5s var(--ease);
+        .top-controls { position: absolute; top: 35px; right: 35px; display: flex; gap: 12px; }
+        .t-btn { background: var(--border); color: var(--neon); border: none; width: 45px; height: 45px; border-radius: 15px; cursor: pointer; transition: 0.3s; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+        .t-btn:hover { background: var(--neon); color: #000; transform: rotate(20deg); }
+
+        /* Header Centralized */
+        header { margin-bottom: 50px; display: flex; flex-direction: column; align-items: center; }
+        .logo-wrap { width: 120px; height: 120px; border-radius: 35px; background: #fff; padding: 4px; box-shadow: 0 20px 40px rgba(0, 242, 254, 0.2); margin-bottom: 25px; }
+        .logo-wrap img { width: 100%; height: 100%; border-radius: 31px; object-fit: cover; }
+        h1 { font-family: 'Montserrat'; font-size: 45px; font-weight: 900; background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -2px; line-height: 1; }
+        .verify-text { font-size: 12px; color: #00ff88; font-weight: 700; margin-top: 10px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; }
+
+        /* App Items */
+        .app-grid { display: grid; gap: 15px; }
+        .app-card { display: flex; align-items: center; padding: 22px 28px; background: rgba(255,255,255,0.03); border-radius: 25px; text-decoration: none; color: var(--text); border: 1px solid var(--border); transition: 0.4s; gap: 20px; }
+        .app-card i { font-size: 28px; color: var(--neon); text-shadow: 0 0 15px var(--neon); }
+        .app-card span { font-weight: 700; font-size: 17px; }
+        .app-card:hover { transform: translateX(10px); background: var(--card-hover); border-color: var(--neon); box-shadow: -5px 0 20px var(--border); }
+
+        /* Admin Layout - Single Line Admin Name */
+        .footer-admin { margin-top: 60px; padding-top: 35px; border-top: 2px solid var(--border); display: flex; align-items: center; justify-content: center; gap: 20px; width: 100%; }
+        .admin-img { width: 80px; height: 80px; border-radius: 25px; border: 3px solid var(--neon); flex-shrink: 0; }
+        .admin-data { text-align: left; white-space: nowrap; overflow: hidden; }
+        .tag-admin { background: var(--neon); color: #000; font-size: 10px; font-weight: 900; padding: 2px 10px; border-radius: 5px; text-transform: uppercase; }
+        .name-admin { display: block; font-family: 'Montserrat'; font-size: 20px; font-weight: 900; color: var(--text); margin-top: 2px; }
+
+        @media (max-width: 768px) { 
+            .ad-box { height: 600px; } 
+            h1 { font-size: 35px; } 
+            .name-admin { font-size: 16px; }
         }
-
-        /* --- Floating/Top Navigation Button --- */
-        .nav-header {
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: 20px;
-            position: sticky;
-            top: 10px;
-            z-index: 100;
-        }
-
-        .main-go-btn {
-            display: block;
-            width: 100%;
-            background: var(--accent-color);
-            color: white;
-            text-align: center;
-            padding: 15px;
-            border-radius: 15px;
-            text-decoration: none;
-            font-weight: 700;
-            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
-            transition: 0.3s;
-        }
-
-        .main-go-btn:hover {
-            transform: translateY(-3px);
-            background: #0ea5e9;
-        }
-
-        /* --- Ad Styling --- */
-        .ad-section {
-            width: 100%;
-            max-width: 720px;
-            margin: 20px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .ad-unit {
-            width: 100%;
-            height: 1080px;
-            background: var(--ad-bg);
-            border: 2px dashed var(--text-secondary);
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .ad-unit::before {
-            content: "SPONSORED ADVERTISEMENT";
-            position: absolute;
-            top: 0; width: 100%;
-            background: var(--text-secondary);
-            color: var(--bg-color);
-            font-size: 10px; font-weight: 800; text-align: center;
-            padding: 5px; z-index: 5;
-        }
-
-        .ad-unit iframe { width: 100%; height: 100%; border: none; padding-top: 25px; }
-
-        /* --- Main App Container --- */
-        .main-container {
-            width: 100%;
-            max-width: 500px;
-            background: var(--container-bg);
-            backdrop-filter: blur(20px);
-            padding: 50px 30px;
-            border-radius: 40px;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .top-controls { position: absolute; top: 25px; right: 25px; display: flex; gap: 10px; }
-        .control-btn {
-            background: rgba(255,255,255,0.05); color: var(--accent-color);
-            border: 1px solid rgba(255,255,255,0.1);
-            width: 40px; height: 40px; border-radius: 12px; cursor: pointer;
-        }
-
-        .logo { width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--accent-color); margin-bottom: 20px; object-fit: cover; }
-        h1 { font-size: 38px; font-weight: 800; color: var(--accent-color); margin-bottom: 5px; }
-        .tagline { font-size: 13px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 40px; }
-
-        .links-grid { display: flex; flex-direction: column; gap: 15px; }
-        .link-card {
-            display: flex; align-items: center; background: rgba(255,255,255,0.03);
-            padding: 18px 25px; border-radius: 20px; text-decoration: none;
-            color: var(--text-primary); font-weight: 600; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
-        }
-        .link-card i { font-size: 24px; margin-right: 20px; color: var(--accent-color); }
-        .link-card:hover { background: var(--accent-color); color: white; transform: translateY(-3px); }
-
-        .footer { margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); }
-        .admin-img { width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--accent-color); margin-bottom: 10px; }
-        .admin-name { display: block; font-weight: 700; color: var(--accent-color); }
-
-        @media (max-width: 768px) { .ad-unit { height: 600px; } }
     </style>
 </head>
 <body>
 
-    <div class="nav-header">
-        <a href="#main-content" class="main-go-btn"><i class="fas fa-arrow-down"></i> GO TO PRO APPS</a>
+    <div class="nav-sticky">
+        <a href="#main-app" class="main-btn"><i class="fas fa-bolt"></i> OPEN PRO APPS HUB</a>
     </div>
 
-    <div class="ad-section">
-        <div class="ad-unit"><iframe src="https://omg10.com/4/10451491"></iframe></div>
-        <div class="ad-unit"><iframe src="https://omg10.com/4/10714156"></iframe></div>
+    <div class="ad-container">
+        <div class="ad-box"><span class="ad-label">SPONSOR AD</span><iframe src="https://omg10.com/4/10451491"></iframe></div>
+    </div>
+    <div class="ad-container">
+        <div class="ad-box"><span class="ad-label">SPONSOR AD</span><iframe src="https://omg10.com/4/10714156"></iframe></div>
     </div>
 
-    <div class="main-container" id="main-content">
+    <div class="glass-panel" id="main-app">
         <div class="top-controls">
-            <button class="control-btn" onclick="toggleTheme()"><i id="t-icon" class="fas fa-moon"></i></button>
-            <button class="control-btn" onclick="location.reload()"><i class="fas fa-sync-alt"></i></button>
+            <button class="t-btn" onclick="toggleTheme()" title="Toggle Theme"><i id="theme-icon" class="fas fa-moon"></i></button>
+            <button class="t-btn" onclick="location.reload()" title="Refresh"><i class="fas fa-sync-alt"></i></button>
         </div>
 
         <header>
-            <img src="cyber-hacker-anonymous-logo-vector-50369664.jpg" alt="Logo" class="logo">
+            <div class="logo-wrap">
+                <img src="cyber-hacker-anonymous-logo-vector-50369664.jpg" alt="Pro Apps">
+            </div>
             <h1>Pro Apps</h1>
-            <p class="tagline">Digital Ecosystem</p>
+            <div class="verify-text"><i class="fas fa-check-circle"></i> 100% Official & Secured</div>
         </header>
 
-        <nav class="links-grid">
-            <a href="https://youtube.com/@skobaidurrahman1" target="_blank" class="link-card"><i class="fab fa-youtube"></i> YouTube</a>
-            <a href="https://t.me/proappslinkbd" target="_blank" class="link-card"><i class="fab fa-telegram"></i> Telegram</a>
-            <a href="https://skobaidurrahman73-droid.github.io/File-transfer-via-link/" target="_blank" class="link-card"><i class="fas fa-share-nodes"></i> Link Share</a>
-            <a href="https://skobaidurrahman73-droid.github.io/Video-Downloader/#" target="_blank" class="link-card"><i class="fas fa-clover"></i> Video Downloader</a>
-            <a href="https://skobaidurrahman73-droid.github.io/Largest-to-smallest-links/" target="_blank" class="link-card"><i class="fas fa-link"></i> Link Shortener</a>
-            <a href="https://skobaidurrahman73-droid.github.io/Largest-to-smallest-links/" target="_blank" class="link-card"><i class="fas fa-rocket"></i> Link Booster</a>
-            <a href="https://skobaidurrahman73-droid.github.io/Wi-Fi-Preet-Metre-/" target="_blank" class="link-card"><i class="fas fa-wifi"></i> Speed Meter</a>
-            <a href="https://skobaidurrahman73-droid.github.io/Phone-info/" target="_blank" class="link-card"><i class="fas fa-microchip"></i> Device Status</a>
+        <nav class="app-grid">
+            <a href="https://youtube.com/@skobaidurrahman1" target="_blank" class="app-card"><i class="fab fa-youtube"></i> <span>Official Youtube</span></a>
+            <a href="https://t.me/proappslinkbd" target="_blank" class="app-card"><i class="fab fa-telegram"></i> <span>Telegram Channel</span></a>
+            <a href="https://skobaidurrahman73-droid.github.io/File-transfer-via-link/" target="_blank" class="app-card"><i class="fas fa-share-nodes"></i> <span>Fast File Transfer</span></a>
+            <a href="https://skobaidurrahman73-droid.github.io/Video-Downloader/#" target="_blank" class="app-card"><i class="fas fa-download"></i> <span>Video Downloader</span></a>
+            <a href="https://skobaidurrahman73-droid.github.io/Largest-to-smallest-links/" target="_blank" class="app-card"><i class="fas fa-link"></i> <span>Link Optimizer</span></a>
+            <a href="https://skobaidurrahman73-droid.github.io/Largest-to-smallest-links/" target="_blank" class="app-card"><i class="fas fa-rocket"></i> <span>Link Booster</span></a>
+            <a href="https://skobaidurrahman73-droid.github.io/Wi-Fi-Preet-Metre-/" target="_blank" class="app-card"><i class="fas fa-gauge-high"></i> <span>Speed Analyser</span></a>
+            <a href="https://skobaidurrahman73-droid.github.io/Phone-info/" target="_blank" class="app-card"><i class="fas fa-mobile-screen"></i> <span>Device Diagnostics</span></a>
         </nav>
 
-        <footer class="footer">
-            <img src="1766747045788.jpg" alt="Admin" class="admin-img">
-            <span class="admin-name">Obaydur Rahman</span>
+        <footer class="footer-admin">
+            <img src="1766747045788.jpg" alt="Obaidur" class="admin-img">
+            <div class="admin-data">
+                <span class="tag-admin">ADMINISTRATOR</span>
+                <span class="name-admin">Obaidur Rahman</span>
+            </div>
         </footer>
     </div>
 
-    <div class="ad-section">
-        <div class="ad-unit"><iframe src="https://omg10.com/4/10451492"></iframe></div>
-        <div class="ad-unit"><iframe src="https://omg10.com/4/10714152"></iframe></div>
+    <div class="ad-container">
+        <div class="ad-box" style="margin-top: 30px;"><span class="ad-label">SPONSOR AD</span><iframe src="https://omg10.com/4/10451492"></iframe></div>
+    </div>
+    <div class="ad-container">
+        <div class="ad-box" style="margin-top: 30px;"><span class="ad-label">SPONSOR AD</span><iframe src="https://omg10.com/4/10714152"></iframe></div>
     </div>
 
     <script>
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
-            const icon = document.getElementById('t-icon');
+            const icon = document.getElementById('theme-icon');
             const isLight = document.body.classList.contains('light-mode');
             icon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            localStorage.setItem('pro_theme', isLight ? 'light' : 'dark');
         }
-        if(localStorage.getItem('theme') === 'light') toggleTheme();
+        window.onload = () => {
+            if(localStorage.getItem('pro_theme') === 'light') toggleTheme();
+        }
     </script>
 </body>
 </html>
