@@ -3,146 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Apps | Premium Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Pro Apps | Elite Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
     <style>
         :root {
-            --bg: #05070a;
-            --panel: rgba(13, 17, 23, 0.8);
+            --bg: #030712;
+            --panel: rgba(17, 24, 39, 0.95);
             --accent: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
             --neon: #00f2fe;
-            --text: #ffffff;
-            --text-dim: #94a3b8;
+            --text: #f9fafb;
+            --muted: #9ca3af;
             --border: rgba(0, 242, 254, 0.2);
-            --card-hover: rgba(0, 242, 254, 0.1);
+            --glass: rgba(255, 255, 255, 0.05);
         }
 
         .light-mode {
-            --bg: #f0f2f5;
-            --panel: rgba(255, 255, 255, 0.9);
-            --accent: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
-            --neon: #2193b0;
-            --text: #1a1a1b;
-            --text-dim: #4b5563;
-            --border: rgba(33, 147, 176, 0.3);
-            --card-hover: rgba(33, 147, 176, 0.05);
+            --bg: #f3f4f6;
+            --panel: rgba(255, 255, 255, 0.98);
+            --accent: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            --neon: #0ea5e9;
+            --text: #111827;
+            --muted: #6b7280;
+            --border: rgba(14, 165, 233, 0.2);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg); color: var(--text); transition: 0.5s; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg); color: var(--text); transition: 0.4s; display: flex; flex-direction: column; align-items: center; padding: 120px 15px; }
 
-        /* Floating Nav */
-        .nav-sticky { width: 100%; max-width: 550px; position: sticky; top: 15px; z-index: 1000; margin-bottom: 40px; }
-        .main-btn { display: flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: #fff; padding: 18px; border-radius: 20px; text-decoration: none; font-family: 'Montserrat'; font-weight: 900; box-shadow: 0 10px 30px rgba(0, 242, 254, 0.3); transition: 0.3s; text-transform: uppercase; }
-        .main-btn:hover { transform: scale(1.02); filter: brightness(1.1); }
+        /* Status Info */
+        .info-bar { position: fixed; top: 20px; left: 20px; z-index: 1000; background: var(--panel); padding: 8px 15px; border-radius: 12px; border: 1px solid var(--border); font-family: 'Montserrat'; font-size: 11px; font-weight: 700; color: var(--neon); letter-spacing: 0.5px; }
 
-        /* Ads */
-        .ad-container { width: 100%; max-width: 720px; margin-bottom: 30px; }
-        .ad-box { width: 100%; height: 1080px; background: var(--panel); border: 2px solid var(--border); border-radius: 30px; overflow: hidden; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
-        .ad-label { position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: var(--neon); color: #000; font-size: 10px; font-weight: 900; padding: 5px 15px; border-radius: 0 0 12px 12px; z-index: 5; }
+        /* Top Nav */
+        .nav-wrap { width: 100%; max-width: 650px; position: fixed; top: 15px; z-index: 1000; padding: 0 10px; }
+        .nav-btn { display: flex; align-items: center; justify-content: center; background: var(--accent); color: #fff; padding: 15px; border-radius: 18px; text-decoration: none; font-family: 'Montserrat'; font-weight: 800; font-size: 13px; box-shadow: 0 10px 25px rgba(0, 242, 254, 0.25); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Ad Units (720x1080) */
+        .ad-container { width: 100%; max-width: 720px; margin-bottom: 70px; }
+        .ad-frame { width: 100%; height: 1080px; background: var(--panel); border: 1px solid var(--border); border-radius: 35px; overflow: hidden; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+        .ad-label { position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: var(--neon); color: #000; font-size: 10px; font-weight: 800; padding: 5px 20px; border-radius: 0 0 12px 12px; z-index: 5; }
         iframe { width: 100%; height: 100%; border: none; }
 
-        /* Glass Panel */
-        .glass-panel { width: 100%; max-width: 550px; background: var(--panel); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 50px; padding: 60px 35px; text-align: center; position: relative; box-shadow: 0 50px 100px rgba(0,0,0,0.4); }
+        /* Main Panel */
+        .main-card { width: 100%; max-width: 650px; background: var(--panel); backdrop-filter: blur(30px); border: 1px solid var(--border); border-radius: 50px; padding: 100px 40px 80px; position: relative; box-shadow: 0 40px 80px rgba(0,0,0,0.5); margin-bottom: 80px; }
         
-        .top-controls { position: absolute; top: 35px; right: 35px; display: flex; gap: 12px; }
-        .t-btn { background: var(--border); color: var(--neon); border: none; width: 45px; height: 45px; border-radius: 15px; cursor: pointer; transition: 0.3s; font-size: 18px; display: flex; align-items: center; justify-content: center; }
-        .t-btn:hover { background: var(--neon); color: #000; transform: rotate(20deg); }
+        /* Fixed Controls Position */
+        .controls { position: absolute; top: 25px; right: 25px; display: flex; gap: 12px; z-index: 10; }
+        .ctrl-icon { background: var(--glass); color: var(--neon); border: 1px solid var(--border); width: 45px; height: 45px; border-radius: 12px; cursor: pointer; transition: 0.3s; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+        .ctrl-icon:hover { background: var(--neon); color: #000; transform: translateY(-3px); }
 
-        /* Header Centralized */
-        header { margin-bottom: 50px; display: flex; flex-direction: column; align-items: center; }
-        .logo-wrap { width: 120px; height: 120px; border-radius: 35px; background: #fff; padding: 4px; box-shadow: 0 20px 40px rgba(0, 242, 254, 0.2); margin-bottom: 25px; }
-        .logo-wrap img { width: 100%; height: 100%; border-radius: 31px; object-fit: cover; }
-        h1 { font-family: 'Montserrat'; font-size: 45px; font-weight: 900; background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -2px; line-height: 1; }
-        .verify-text { font-size: 12px; color: #00ff88; font-weight: 700; margin-top: 10px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; }
+        /* Branding */
+        header { margin-bottom: 50px; text-align: center; margin-top: 20px; }
+        .logo-wrap { width: 120px; height: 120px; border-radius: 35px; background: #fff; padding: 5px; box-shadow: 0 20px 40px rgba(0, 242, 254, 0.2); margin: 0 auto 25px; position: relative; }
+        .logo-wrap img { width: 100%; height: 100%; border-radius: 30px; object-fit: cover; }
+        h1 { font-family: 'Montserrat'; font-size: 36px; font-weight: 800; background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; }
+        .v-badge { font-size: 11px; color: #10b981; font-weight: 700; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; text-transform: uppercase; border: 1px solid rgba(16, 185, 129, 0.2); padding: 5px 15px; border-radius: 20px; }
 
-        /* App Items */
-        .app-grid { display: grid; gap: 15px; }
-        .app-card { display: flex; align-items: center; padding: 22px 28px; background: rgba(255,255,255,0.03); border-radius: 25px; text-decoration: none; color: var(--text); border: 1px solid var(--border); transition: 0.4s; gap: 20px; }
-        .app-card i { font-size: 28px; color: var(--neon); text-shadow: 0 0 15px var(--neon); }
-        .app-card span { font-weight: 700; font-size: 17px; }
-        .app-card:hover { transform: translateX(10px); background: var(--card-hover); border-color: var(--neon); box-shadow: -5px 0 20px var(--border); }
+        /* Search */
+        .search-wrap { margin-bottom: 35px; }
+        #search { width: 100%; padding: 16px 22px; border-radius: 20px; border: 1px solid var(--border); background: var(--glass); color: #fff; font-size: 14px; outline: none; }
+        #search:focus { border-color: var(--neon); }
 
-        /* Admin Layout - Single Line Admin Name */
-        .footer-admin { margin-top: 60px; padding-top: 35px; border-top: 2px solid var(--border); display: flex; align-items: center; justify-content: center; gap: 20px; width: 100%; }
-        .admin-img { width: 80px; height: 80px; border-radius: 25px; border: 3px solid var(--neon); flex-shrink: 0; }
-        .admin-data { text-align: left; white-space: nowrap; overflow: hidden; }
-        .tag-admin { background: var(--neon); color: #000; font-size: 10px; font-weight: 900; padding: 2px 10px; border-radius: 5px; text-transform: uppercase; }
-        .name-admin { display: block; font-family: 'Montserrat'; font-size: 20px; font-weight: 900; color: var(--text); margin-top: 2px; }
+        /* App List */
+        .app-grid { display: flex; flex-direction: column; gap: 16px; }
+        .app-item { display: flex; align-items: center; padding: 22px 30px; background: var(--glass); border-radius: 25px; text-decoration: none; color: var(--text); border: 1px solid var(--border); transition: 0.3s; gap: 20px; }
+        .app-item i { font-size: 24px; color: var(--neon); }
+        .app-item span { font-weight: 700; font-size: 16px; font-family: 'Montserrat'; }
+        .app-item:hover { transform: translateX(10px); background: rgba(0, 242, 254, 0.08); border-color: var(--neon); }
 
-        @media (max-width: 768px) { 
-            .ad-box { height: 600px; } 
-            h1 { font-size: 35px; } 
-            .name-admin { font-size: 16px; }
+        /* Admin Signature */
+        .admin-footer { margin-top: 70px; padding-top: 40px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: center; gap: 20px; }
+        .admin-img { width: 85px; height: 85px; border-radius: 25px; border: 3px solid var(--neon); padding: 4px; flex-shrink: 0; }
+        .admin-img img { width: 100%; height: 100%; border-radius: 20px; object-fit: cover; }
+        .admin-data { text-align: left; }
+        .tag { background: var(--neon); color: #000; font-size: 9px; font-weight: 800; padding: 3px 12px; border-radius: 6px; text-transform: uppercase; }
+        .name { display: block; font-family: 'Montserrat'; font-size: 20px; font-weight: 800; color: var(--text); margin-top: 5px; white-space: nowrap; }
+
+        /* Back to top */
+        .btt { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; visibility: hidden; transition: 0.3s; z-index: 100; }
+        .btt.active { opacity: 1; visibility: visible; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 28px; }
+            .main-card { padding: 90px 25px 60px; border-radius: 40px; }
+            .ad-frame { height: 700px; }
+            .name { font-size: 18px; }
+            .info-bar { display: none; }
+            .controls { top: 20px; right: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="nav-sticky">
-        <a href="#main-app" class="main-btn"><i class="fas fa-bolt"></i> OPEN PRO APPS HUB</a>
+    <div class="info-bar" id="clock">00:00:00</div>
+
+    <div class="nav-wrap">
+        <a href="#hub" class="nav-btn"><i class="fas fa-fingerprint"></i> SECURE ACCESS HUB</a>
     </div>
 
-    <div class="ad-container">
-        <div class="ad-box"><span class="ad-label">SPONSOR AD</span><iframe src="https://omg10.com/4/10451491"></iframe></div>
-    </div>
-    <div class="ad-container">
-        <div class="ad-box"><span class="ad-label">SPONSOR AD</span><iframe src="https://omg10.com/4/10714156"></iframe></div>
-    </div>
+    <div class="ad-container"><div class="ad-frame"><span class="ad-label">SPONSOR</span><iframe src="https://omg10.com/4/10451491"></iframe></div></div>
+    <div class="ad-container"><div class="ad-frame"><span class="ad-label">SPONSOR</span><iframe src="https://omg10.com/4/10714156"></iframe></div></div>
 
-    <div class="glass-panel" id="main-app">
-        <div class="top-controls">
-            <button class="t-btn" onclick="toggleTheme()" title="Toggle Theme"><i id="theme-icon" class="fas fa-moon"></i></button>
-            <button class="t-btn" onclick="location.reload()" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+    <main class="main-card" id="hub">
+        <div class="controls">
+            <button class="ctrl-icon" onclick="toggleTheme()"><i id="ti" class="fas fa-moon"></i></button>
+            <button class="ctrl-icon" onclick="location.reload()"><i class="fas fa-sync-alt"></i></button>
         </div>
 
         <header>
-            <div class="logo-wrap">
-                <img src="cyber-hacker-anonymous-logo-vector-50369664.jpg" alt="Pro Apps">
-            </div>
+            <div class="logo-wrap"><img src="cyber-hacker-anonymous-logo-vector-50369664.jpg" alt="Logo"></div>
             <h1>Pro Apps</h1>
-            <div class="verify-text"><i class="fas fa-check-circle"></i> 100% Official & Secured</div>
+            <div class="v-badge"><i class="fas fa-check-circle"></i> Official Verified by Pro Apps</div>
         </header>
 
-        <nav class="app-grid">
-            <a href="https://youtube.com/@skobaidurrahman1" target="_blank" class="app-card"><i class="fab fa-youtube"></i> <span>Official Youtube</span></a>
-            <a href="https://t.me/proappslinkbd" target="_blank" class="app-card"><i class="fab fa-telegram"></i> <span>Telegram Channel</span></a>
-            <a href="https://skobaidurrahman73-droid.github.io/File-transfer-via-link/" target="_blank" class="app-card"><i class="fas fa-share-nodes"></i> <span>Fast File Transfer</span></a>
-            <a href="https://skobaidurrahman73-droid.github.io/Video-Downloader/#" target="_blank" class="app-card"><i class="fas fa-download"></i> <span>Video Downloader</span></a>
-            <a href="https://skobaidurrahman73-droid.github.io/Largest-to-smallest-links/" target="_blank" class="app-card"><i class="fas fa-link"></i> <span>Link Optimizer</span></a>
-            <a href="https://skobaidurrahman73-droid.github.io/Largest-to-smallest-links/" target="_blank" class="app-card"><i class="fas fa-rocket"></i> <span>Link Booster</span></a>
-            <a href="https://skobaidurrahman73-droid.github.io/Wi-Fi-Preet-Metre-/" target="_blank" class="app-card"><i class="fas fa-gauge-high"></i> <span>Speed Analyser</span></a>
-            <a href="https://skobaidurrahman73-droid.github.io/Phone-info/" target="_blank" class="app-card"><i class="fas fa-mobile-screen"></i> <span>Device Diagnostics</span></a>
+        <div class="search-wrap">
+            <input type="text" id="search" placeholder="Search tools..." onkeyup="filter()">
+        </div>
+
+        <nav class="app-grid" id="list">
+            <a href="https://youtube.com/@skobaidurrahman1" target="_blank" class="app-item"><i class="fab fa-youtube"></i> <span>Youtube Channel</span></a>
+            <a href="https://t.me/proappslinkbd" target="_blank" class="app-item"><i class="fab fa-telegram-plane"></i> <span>Telegram Channel</span></a>
+            <a href="https://skobaidurrahman73-droid.github.io/File-transfer-via-link/" target="_blank" class="app-item"><i class="fas fa-share-nodes"></i> <span>File Transfer</span></a>
+            <a href="https://skobaidurrahman73-droid.github.io/Video-Downloader/#" target="_blank" class="app-item"><i class="fas fa-download"></i> <span>Media Downloader</span></a>
+            <a href="https://skobaidurrahman73-droid.github.io/Largest-to-smallest-links/" target="_blank" class="app-item"><i class="fas fa-link"></i> <span>Link Optimizer</span></a>
+            <a href="https://skobaidurrahman73-droid.github.io/Largest-to-smallest-links/" target="_blank" class="app-item"><i class="fas fa-bolt"></i> <span>Link Booster</span></a>
+            <a href="https://skobaidurrahman73-droid.github.io/Wi-Fi-Preet-Metre-/" target="_blank" class="app-item"><i class="fas fa-wifi"></i> <span>Network Analyser</span></a>
+            <a href="https://skobaidurrahman73-droid.github.io/Phone-info/" target="_blank" class="app-item"><i class="fas fa-microchip"></i> <span>System Diagnostics</span></a>
         </nav>
 
-        <footer class="footer-admin">
-            <img src="1766747045788.jpg" alt="Obaidur" class="admin-img">
+        <footer class="admin-footer">
+            <div class="admin-img"><img src="1766747045788.jpg" alt="Admin"></div>
             <div class="admin-data">
-                <span class="tag-admin">ADMINISTRATOR</span>
-                <span class="name-admin">Obaidur Rahman</span>
+                <span class="tag">Administrator</span>
+                <span class="name">Obaidur Rahman</span>
             </div>
         </footer>
-    </div>
+    </main>
 
-    <div class="ad-container">
-        <div class="ad-box" style="margin-top: 30px;"><span class="ad-label">SPONSOR AD</span><iframe src="https://omg10.com/4/10451492"></iframe></div>
-    </div>
-    <div class="ad-container">
-        <div class="ad-box" style="margin-top: 30px;"><span class="ad-label">SPONSOR AD</span><iframe src="https://omg10.com/4/10714152"></iframe></div>
-    </div>
+    <div class="ad-container"><div class="ad-frame"><span class="ad-label">SPONSOR</span><iframe src="https://omg10.com/4/10451492"></iframe></div></div>
+    <div class="ad-container"><div class="ad-frame"><span class="ad-label">SPONSOR</span><iframe src="https://omg10.com/4/10714152"></iframe></div></div>
+
+    <div class="btt" id="b" onclick="window.scrollTo(0,0)"><i class="fas fa-arrow-up"></i></div>
 
     <script>
+        function updateClock() {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
-            const icon = document.getElementById('theme-icon');
-            const isLight = document.body.classList.contains('light-mode');
-            icon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
-            localStorage.setItem('pro_theme', isLight ? 'light' : 'dark');
+            const i = document.getElementById('ti');
+            const isL = document.body.classList.contains('light-mode');
+            i.className = isL ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('theme', isL ? 'light' : 'dark');
         }
-        window.onload = () => {
-            if(localStorage.getItem('pro_theme') === 'light') toggleTheme();
+        if(localStorage.getItem('theme') === 'light') toggleTheme();
+
+        function filter() {
+            let v = document.getElementById('search').value.toLowerCase();
+            document.querySelectorAll('.app-item').forEach(i => {
+                i.style.display = i.innerText.toLowerCase().includes(v) ? 'flex' : 'none';
+            });
         }
+
+        window.onscroll = function() {
+            let b = document.getElementById('b');
+            b.classList.toggle('active', window.scrollY > 400);
+        };
     </script>
 </body>
 </html>
