@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Apps | Premium Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* -----------------------------------------
+           1. CSS Variables & Reset
+        ----------------------------------------- */
+        :root {
+            /* Dark Mode colors (Default) */
+            --bg-color: #0f172a;
+            --bg-gradient: radial-gradient(circle at top right, #1e293b 0%, #0f172a 100%);
+            --container-bg: rgba(30, 41, 59, 0.6);
+            --container-border: rgba(255, 255, 255, 0.08);
+            --container-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-color: #38bdf8; /* Cyan */
+            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            
+            --link-bg: rgba(255, 255, 255, 0.03);
+            --link-bg-hover: rgba(56, 189, 248, 0.1);
+            --link-border: rgba(255, 255, 255, 0.05);
+            --link-border-hover: rgba(56, 189, 248, 0.4);
+            --link-shadow-hover: 0 10px 20px rgba(56, 189, 248, 0.15);
+            
+            --icon-btn-bg: rgba(255, 255, 255, 0.05);
+            --icon-btn-hover: #38bdf8;
+            --icon-btn-text-hover: #0f172a;
+
+            --ease: cubic-bezier(0.23, 1, 0.32, 1); /* Smooth animation timing */
+        }
+
+        /* Light Mode colors */
+        .light-mode {
+            --bg-color: #f1f5f9;
+            --bg-gradient: radial-gradient(circle at top right, #e2e8f0 0%, #f1f5f9 100%);
+            --container-bg: rgba(255, 255, 255, 0.8);
+            --container-border: rgba(0, 0, 0, 0.06);
+            --container-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --accent-color: #0284c7; /* Darker Cyan */
+            --accent-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+            
+            --link-bg: #ffffff;
+            --link-bg-hover: rgba(2, 132, 199, 0.05);
+            --link-border: rgba(0, 0, 0, 0.05);
+            --link-border-hover: rgba(2, 132, 199, 0.3);
+            --link-shadow-hover: 0 10px 20px rgba(2, 132, 199, 0.1);
+            
+            --icon-btn-bg: rgba(0, 0, 0, 0.05);
+            --icon-btn-hover: #0284c7;
+            --icon-btn-text-hover: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Mobile optimization */
+        }
+
+        /* -----------------------------------------
+           2. Body & Layout
+        ----------------------------------------- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-color);
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-primary);
+            transition: background 0.5s var(--ease), color 0.5s var(--ease);
+            overflow-x: hidden;
+        }
+
+        /* Background animated blobs for extra style (optional) */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            filter: blur(100px);
+            opacity: 0.15;
+            z-index: -1;
+            transition: opacity 0.5s var(--ease);
+        }
+        body::before { top: -50px; left: -50px; }
+        body::after { bottom: -50px; right: -50px; }
+
+        /* -----------------------------------------
+           3. Container
+        ----------------------------------------- */
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--container-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 50px 30px;
+            border-radius: 35px;
+            border: 1px solid var(--container-border);
+            box-shadow: var(--container-shadow);
+            text-align: center;
+            position: relative;
+            transform: translateY(0);
+            transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.5s var(--ease), border 0.5s var(--ease);
+            animation: containerAppear 0.8s var(--ease) forwards;
+            opacity: 0;
+        }
+
+        @keyframes containerAppear {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* -----------------------------------------
+           4. Top Buttons (Theme & Refresh)
+        ----------------------------------------- */
+        .top-btns {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            display: flex;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .icon-btn {
+            background: var(--icon-btn-bg);
+            color: var(--accent-color);
+            border: 1px solid var(--container-border);
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s var(--ease);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .icon-btn:hover {
+            background: var(--icon-btn-hover);
+            color: var(--icon-btn-text-hover);
+            transform: translateY(-3px) rotate(15deg);
+            box-shadow: 0 8px 15px rgba(56, 189, 248, 0.2);
+        }
+
+        .icon-btn:active {
+            transform: translateY(-1px) rotate(0deg);
+        }
+
+        /* -----------------------------------------
+           5. Header (Title & Subtitle)
+        ----------------------------------------- */
+        h1 {
+            font-size: 38px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        /* -----------------------------------------
+           6. Links Wrapper & Links
+        ----------------------------------------- */
+        .links-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .site-link {
+            display: flex;
+            align-items: center;
+            background: var(--link-bg);
+            color: var(--link-text);
+            text-decoration: none;
+            padding: 18px 25px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 16px;
+            border: 1px solid var(--link-border);
+            transition: all 0.4s var(--ease);
+            position: relative;
+            overflow: hidden; /* For shine effect */
+        }
+
+        /* Left Icon */
+        .site-link i {
+            font-size: 24px;
+            margin-right: 20px;
+            width: 30px;
+            color: var(--accent-color);
+            transition: transform 0.3s var(--ease);
+        }
+
+        /* Link Text Container */
+        .link-text {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            flex: 1;
+        }
+
+        /* Prank Alert Warning Text */
+        .warning {
+            color: #ef4444;
+            font-size: 11px;
+            font-weight: 400;
+            margin-top: 3px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        /* Hover Effects */
+        .site-link:hover {
+            background: var(--link-bg-hover);
+            border-color: var(--link-border-hover);
+            transform: translateY(-5px);
+            box-shadow: var(--link-shadow-hover);
+            color: var(--text-primary);
+        }
+
+        .site-link:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Right Arrow Icon */
+        .site-link::after {
+            content: '\f0da'; /* FontAwesome caret-right */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 25px;
+            color: var(--accent-color);
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s var(--ease);
+        }
+
+        .site-link:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Active/Click Effect */
+        .site-link:active {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(56, 189, 248, 0.1);
+        }
+
+        /* -----------------------------------------
+           7. Admin Info (Footer)
+        ----------------------------------------- */
+        .admin-info {
+            margin-top: 45px;
+            padding-top: 25px;
+            border-top: 1px solid var(--container-border);
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .admin-name {
+            color: var(--accent-color);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* -----------------------------------------
+           8. Responsive Adjustments
+        ----------------------------------------- */
+        @media (max-width: 480px) {
+            .container {
+                padding: 40px 20px;
+                border-radius: 30px;
+            }
+            h1 { font-size: 32px; }
+            .subtitle { font-size: 11px; letter-spacing: 2px; }
+            .site-link { padding: 16px 20px; font-size: 15px; }
+            .site-link i { font-size: 20px; margin-right: 15px; width: 25px; }
+            .top-btns { top: 20px; right: 20px; }
+            .icon-btn { width: 38px; height: 38px; font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="top-btns">
+        <button class="icon-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
+            <i id="theme-icon" class="fas fa-moon"></i>
+        </button>
+        <button class="icon-btn" onclick="smoothRefresh()" title="Refresh Page" aria-label="Refresh">
+            <i class="fas fa-sync-alt"></i>
+        </button>
+    </div>
+
+    <header>
+        <h1>Pro Apps</h1>
+        <p class="subtitle">Digital Ecosystem</p>
+    </header>
+    
+    <nav class="links-wrapper">
+        <a href="https://youtube.com/@skobaidurrahman1?si=YVlyY2KxAr1RbiGQ" target="_blank" class="site-link">
+            <i class="fab fa-youtube"></i>
+            <span class="link-text">YouTube Channel</span>
+        </a>
+        
+        <a href="https://t.me/proappslinkbd" target="_blank" class="site-link">
+            <i class="fab fa-telegram"></i>
+            <span class="link-text">Telegram Channel</span>
+        </a>
+
+        <a href="https://skobaidurrahman73-droid.github.io/File-transfer-via-link/" target="_blank" class="site-link">
+            <i class="fas fa-share-nodes"></i>
+            <span class="link-text">Link Share (YT & TG)</span>
+        </a>
+
+        <a href="https://skobaidurrahman73-droid.github.io/Video-Downloader/#" target="_blank" class="site-link">
+            <i class="fas fa-clover"></i>
+            <span class="link-text">Video Downloader</span>
+        </a>
+
+        <a href="https://skobaidurrahman73-droid.github.io/Largest-to-smallest-links/" target="_blank" class="site-link">
+            <i class="fas fa-link"></i>
+            <span class="link-text">Link Shortener</span>
+        </a>
+
+        <a href="https://skobaidurrahman73-droid.github.io/Largest-to-smallest-links/" target="_blank" class="site-link">
+            <i class="fas fa-rocket"></i>
+            <div class="link-text">
+                Link Booster
+                <span class="warning">(Prank Alert: May lag devices)</span>
+            </div>
+        </a>
+
+        <a href="https://skobaidurrahman73-droid.github.io/Wi-Fi-Preet-Metre-/" target="_blank" class="site-link">
+            <i class="fas fa-wifi"></i>
+            <span class="link-text">Internet Speed Meter</span>
+        </a>
+
+        <a href="https://skobaidurrahman73-droid.github.io/Phone-info/" target="_blank" class="site-link">
+            <i class="fas fa-microchip"></i>
+            <span class="link-text">Device Status Checker</span>
+        </a>
+    </nav>
+
+    <footer class="admin-info">
+        Developed & Maintained by <br>
+        <span class="admin-name">Obaydur Rahman</span>
+    </footer>
+</div>
+
+<script>
+    // 1. Theme Toggler (Dark/Light) with LocalStorage
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById('theme-icon');
+        
+        body.classList.toggle('light-mode');
+        
+        if (body.classList.contains('light-mode')) {
+            icon.classList.replace('fa-moon', 'fa-sun');
+            localStorage.setItem('proapps_theme', 'light');
+        } else {
+            icon.classList.replace('fa-sun', 'fa-moon');
+            localStorage.setItem('proapps_theme', 'dark');
+        }
+    }
+
+    // Load saved theme on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('proapps_theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+            document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+        }
+    });
+
+    // 2. Smooth Refresh Function
+    function smoothRefresh() {
+        const container = document.querySelector('.container');
+        // Add a disappearing animation
+        container.style.animation = 'containerDisappear 0.4s var(--ease) forwards';
+        
+        // Reload after animation completes
+        setTimeout(() => {
+            location.reload();
+        }, 400);
+    }
+
+    // Add disappearance keyframes dynamically
+    const styleSheet = document.styleSheets[0];
+    styleSheet.insertRule(`
+        @keyframes containerDisappear {
+            from { opacity: 1; transform: translateY(0) scale(1); }
+            to { opacity: 0; transform: translateY(20px) scale(0.95); }
+        }
+    `, styleSheet.cssRules.length);
+</script>
+
+</body>
+</html>
